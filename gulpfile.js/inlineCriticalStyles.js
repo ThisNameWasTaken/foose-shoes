@@ -6,7 +6,7 @@ const critical = require('critical').stream;
 const inlineCriticalStyles = done => {
   if (IS_DEV) { return done(); } // skip during development
 
-  src(`${DEST}/*.html`)
+  return src(`${DEST}/*.html`)
     .pipe(flatmap((stream, file) => {
       let contents = file.contents.toString('utf8');
 
@@ -16,17 +16,13 @@ const inlineCriticalStyles = done => {
 
       const stylesheets = stylesheetMatches.map(href => `${DEST}\\${href.match(/href="(.*)"/)[1]}`);
 
-      src(file.path)
+      return src(file.path)
         .pipe(critical({
           inline: true,
           css: stylesheets
         }).on('error', error => console.error(error)))
         .pipe(dest(`${DEST}`));
-
-      return stream;
     }));
-
-  return done();
 }
 
 module.exports = inlineCriticalStyles;

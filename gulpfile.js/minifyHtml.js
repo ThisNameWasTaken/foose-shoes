@@ -15,10 +15,9 @@ const minifyOptions = {
 const minifyHtml = done => {
   if (IS_DEV) { return done(); } // skip during development
 
-  src(`${DEST}/*.html`)
+  return src(`${DEST}/*.html`)
     .pipe(htmlmin(minifyOptions))
     .pipe(dest(`${DEST}`));
-
-  return done();
 }
+
 module.exports = minifyHtml;

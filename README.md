@@ -23,3 +23,35 @@ npm run serve
 **[ROADMAP](./ROADMAP.md)**
 
 **[CONTRIBUTING](./CONTRIBUTING.md)**
+
+## Importing files
+
+**Note:** This guide assumes the fallowing folder structure:
+
+src/
+├── images/
+│   └── image.png
+├── js/
+│   └── index.js
+├── styles/
+│   └── index.scss
+└── views/
+    └── index.html
+
+### Importing SASS files
+
+```html
+<link rel="stylesheet" href="../styles/index.scss">
+```
+
+### Importing JS files
+
+```html
+<script async defer href="../js/index.js"></script>
+```
+
+### Importing Images
+
+```html
+  <img src="../images/image.png" alt="the coolest image you have ever came across"/>
+```

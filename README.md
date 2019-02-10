@@ -28,6 +28,7 @@ npm run serve
 
 **Note:** This guide assumes the fallowing folder structure:
 
+```sh
 src/
 ├── images/
 │   └── image.png
@@ -37,6 +38,7 @@ src/
 │   └── index.scss
 └── views/
     └── index.html
+```
 
 ### Importing SASS files
 

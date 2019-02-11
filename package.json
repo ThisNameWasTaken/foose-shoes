@@ -6,6 +6,8 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npm run clean && npx gulp bundle && npx gulp inlineCriticalStyles && npx gulp minifyHtml",
+    "build:dev": "npx gulp bundle --development",
+    "start": "npm run clean && npm run build:dev && npx gulp start",
     "serve": "npm run build && npx gulp serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,7 +25,6 @@
     "cssnano": "^4.1.8",
     "gulp": "^4.0.0",
     "gulp-cli": "^2.0.1",
-    "gulp-connect": "^5.7.0",
     "gulp-flatmap": "^1.0.2",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^2.0.2",

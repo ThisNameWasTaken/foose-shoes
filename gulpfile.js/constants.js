@@ -11,6 +11,11 @@ module.exports = {
     VIEWS: 'views',
     SW: 'serviceWorker.js',
   },
+  SERVER: {
+    PORT: 5555,
+    HTTPS: false,
+    CORS: true,
+  },
   IS_DEV,
   IS_PROD,
 };

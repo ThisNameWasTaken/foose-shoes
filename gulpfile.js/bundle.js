@@ -33,7 +33,7 @@ const imageminOptions = [
   }),
 ];
 
-const js = () => {
+const js = () =>
   jsPaths.map(jsPath => {
     // create a js bundle
 
@@ -49,9 +49,8 @@ const js = () => {
       }))
       .pipe(dest(`${DEST}`));
   });
-};
 
-const stylesheets = () => {
+const stylesheets = () =>
   stylesheetPaths.map(stylesheetPath =>
     src(stylesheetPath)
       .pipe(sass({
@@ -71,9 +70,8 @@ const stylesheets = () => {
       }))
       .pipe(dest(`${DEST}`))
   );
-};
 
-const images = () => {
+const images = () =>
   imagePaths.map(imagePath =>
     src(imagePath)
       .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production
@@ -81,7 +79,6 @@ const images = () => {
         dirname: '', // remove nested folders from the file path
       }))
   );
-}
 
 const updateFilePaths = flatmap((stream, file) => {
   let contents = file.contents.toString('utf8');

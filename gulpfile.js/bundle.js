@@ -1,4 +1,4 @@
-const { src, dest } = require('gulp');
+const { src, dest, series, parallel } = require('gulp');
 const { IS_PROD, DIR: { SRC, DEST, VIEWS } } = require('./constants');
 const path = require('path');
 const flatmap = require('gulp-flatmap');
@@ -13,11 +13,11 @@ const _webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
 const imagemin = require('gulp-imagemin');
 
+sass.compiler = require('node-sass');
+
 let jsPaths = [];
 let stylesheetPaths = [];
 let imagePaths = [];
-
-sass.compiler = require('node-sass');
 
 const imageminOptions = [
   imagemin.jpegtran({
@@ -33,52 +33,63 @@ const imageminOptions = [
   }),
 ];
 
-const js = () =>
-  jsPaths.map(jsPath => {
-    // create a js bundle
+const js = done => {
+  if (!jsPaths.length) { return done(); } // if there are no js files to be bundled, exit
 
-    webpackConfig.entry[`${path.parse(jsPath).name}`] = `.\\${jsPath}`;
+  const jsBlob = jsPaths.join(',');
 
-    return src(jsPath) // TODO: return a stream
-      .pipe(webpack(
-        webpackConfig,
-        _webpack
-      ))
-      .pipe(rename({
-        dirname: '', // remove nested folders from the file path
-      }))
-      .pipe(dest(`${DEST}`));
-  });
+  return src(jsBlob)
+    .pipe(flatmap((stream, file) => { // create a bundle for each js file
+      webpackConfig.entry[`${path.parse(file.path).name}`] = file.path;
 
-const stylesheets = () =>
-  stylesheetPaths.map(stylesheetPath =>
-    src(stylesheetPath)
-      .pipe(sass({
-        includePaths: [
-          'node_modules', // parse installed packages as well
-        ],
-      }).on('error', sass.logError))
-      .pipe(postcss()) // minify and auto-prefix styles
-      .pipe(IF(IS_PROD, purgecss({ // remove unused styles in production
-        content: [
-          path.join(__dirname, `../${SRC}/**/*.{html}`),
-          path.join(__dirname, `../${SRC}/**/*.{js,mjs}`), // TODO: Add extractors that only looks at strings inside js files so that variable names and comment do not get picked up
-        ],
-      })))
-      .pipe(rename({
-        dirname: '', // remove nested folders from the file path
-      }))
-      .pipe(dest(`${DEST}`))
-  );
+      return src(file.path)
+        .pipe(webpack(
+          webpackConfig,
+          _webpack
+        ));
+    }))
+    .pipe(rename({
+      dirname: '', // remove nested folders from the file path
+    }))
+    .pipe(dest(DEST));
+};
 
-const images = () =>
-  imagePaths.map(imagePath =>
-    src(imagePath)
-      .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production
-      .pipe(rename({
-        dirname: '', // remove nested folders from the file path
-      }))
-  );
+const stylesheets = done => {
+  if (!stylesheetPaths.length) { return done(); } // if there are no stylesheets, exit
+
+  const stylesheetGlob = stylesheetPaths.join(',');
+
+  return src(stylesheetGlob)
+    .pipe(sass({
+      includePaths: [
+        'node_modules', // parse installed packages as well
+      ],
+    }).on('error', sass.logError))
+    .pipe(postcss()) // minify and auto-prefix styles
+    .pipe(IF(IS_PROD, purgecss({ // remove unused styles in production
+      content: [
+        path.join(__dirname, `../${SRC}/**/*.{html}`),
+        path.join(__dirname, `../${SRC}/**/*.{js,mjs}`), // TODO: Add extractors that only looks at strings inside js files so that variable names and comment do not get picked up
+      ],
+    })))
+    .pipe(rename({
+      dirname: '', // remove nested folders from the file path
+    }))
+    .pipe(dest(DEST));
+};
+
+const images = done => {
+  if (!imagePaths.length) { return done(); } // if there are no images, exit
+
+  const imageGlob = imagePaths.join(',');
+
+  return src(imageGlob)
+    .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production
+    .pipe(rename({
+      dirname: '', // remove nested folders from the file path
+    }))
+    .pipe(dest(DEST));
+};
 
 const updateFilePaths = flatmap((stream, file) => {
   let contents = file.contents.toString('utf8');
@@ -137,19 +148,20 @@ const updateFilePaths = flatmap((stream, file) => {
     })
     : [];
 
-
   // update the paths inside the html file
   file.contents = Buffer.from(contents);
 
   return stream;
 });
 
-const bundle = () =>
+const html = () =>
   src(`${SRC}/${VIEWS}/**.html`)
     .pipe(htmlmin({
       removeComments: true,
     }))
     .pipe(updateFilePaths)
-    .pipe(dest(`${DEST}`));
+    .pipe(dest(DEST));
+
+const bundle = series(html, parallel(js, stylesheets, images));
 
 module.exports = bundle;

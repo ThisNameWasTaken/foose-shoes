@@ -12,6 +12,7 @@ const webpack = require('webpack-stream');
 const _webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
 const imagemin = require('gulp-imagemin');
+const browserSync = require('./browserSyncInstance');
 
 sass.compiler = require('node-sass');
 
@@ -75,7 +76,8 @@ const stylesheets = done => {
     .pipe(rename({
       dirname: '', // remove nested folders from the file path
     }))
-    .pipe(dest(DEST));
+    .pipe(dest(DEST))
+    .pipe(browserSync.stream());
 };
 
 const images = done => {
@@ -164,4 +166,10 @@ const html = () =>
 
 const bundle = series(html, parallel(js, stylesheets, images));
 
-module.exports = bundle;
+module.exports = {
+  html,
+  stylesheets,
+  images,
+  js,
+  bundle,
+};

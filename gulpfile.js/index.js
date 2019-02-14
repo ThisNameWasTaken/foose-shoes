@@ -1,14 +1,9 @@
-const { series, parallel } = require('gulp');
-const bundle = require('./bundle');
-const inlineCriticalStyles = require('./inlineCriticalStyles');
-const minifyHtml = require('./minifyHtml');
 const { serve, start } = require('./serve');
+const build = require('./build');
 
 module.exports = {
-  bundle,
-  inlineCriticalStyles,
-  minifyHtml,
   serve,
   start,
-  default: series(bundle, inlineCriticalStyles, minifyHtml)
-}
+  build,
+  default: build,
+};

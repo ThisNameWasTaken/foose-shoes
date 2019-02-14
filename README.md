@@ -14,17 +14,7 @@ npm run build
 
 ## ⚙️ Serve production build
 
-```sh
-npm run serve
-```
-
-**[CHANGELOG](./CHANGELOG.md)**
-
-**[ROADMAP](./ROADMAP.md)**
-
-**[CONTRIBUTING](./CONTRIBUTING.md)**
-
-## Importing files
+## 📑 Importing files
 
 **Note:** This guide assumes the fallowing folder structure:
 
@@ -57,3 +47,13 @@ src/
 ```html
   <img src="../images/image.png" alt="the coolest image you have ever came across"/>
 ```
+
+```sh
+npm run serve
+```
+
+**[CHANGELOG](./CHANGELOG.md)**
+
+**[ROADMAP](./ROADMAP.md)**
+
+**[CONTRIBUTING](./CONTRIBUTING.md)**

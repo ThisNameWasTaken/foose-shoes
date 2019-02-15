@@ -1,14 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="../styles/index.scss">
-</head>
-<body>
-  <div class="used-class"></div>
-  <script async defer src="../js/index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/index.scss" />
+  </head>
+  <body>
+    <nav class="position-fixed w-100">
+      <div class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand text-primary text-uppercase" href="/">
+            FooseShoes
+          </a>
+
+          <form class="form-inline">
+            <input
+              class="form-control form-control-dark mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Login or register
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pages</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+              <li class="navbar-item">
+                <a href="" class="nav-link">
+                  star
+                  <div class="badge badge-grey text-light">30</div>
+                </a>
+              </li>
+              <li class="navbar-item">
+                <a href="" class="nav-link">
+                  shopping_cart
+                  <span class="badge badge-primary text-light">0</span>
+                </a>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <script async defer src="../js/index.js"></script>
+  </body>
 </html>

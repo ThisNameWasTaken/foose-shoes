@@ -93,75 +93,73 @@ const images = done => {
     .pipe(dest(DEST));
 };
 
-const updateFilePaths = flatmap((stream, file) => {
-  let contents = file.contents.toString('utf8');
-
-  // get js files paths
-  const jsFileMatches = contents.match(/src=".*\.js"/g);
-  jsPaths = jsFileMatches
-    ? jsFileMatches.map(jsFileMatch => {
-      // create a js bundle
-      const relativeFilePath = jsFileMatch.match(/src="(.*)"/)[1];
-
-      // update file paths
-      contents = contents.replace(
-        relativeFilePath,
-        path.basename(relativeFilePath)
-      );
-
-      const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-      return filePath;
-    })
-    : [];
-
-  // get stylesheets paths
-  const stylesheetMatches = contents.match(/href=".*\.(css|sass|scss)"/g);
-  stylesheetPaths = stylesheetMatches
-    ? stylesheetMatches.map(stylesheetMatch => {
-      const relativeFilePath = stylesheetMatch.match(/href="(.*)"/)[1];
-
-      // update file paths
-      contents = contents.replace(
-        relativeFilePath,
-        path
-          .basename(relativeFilePath)
-          .replace(/\.(scss|sass)$/, '.css')
-      );
-
-      const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-      return filePath;
-    })
-    : [];
-
-  // get image paths
-  const images = contents.match(/=".*\.(jpeg|jpg|png|gif|svg|webp)"/gi);
-  imagePaths = images
-    ? images.map(imagePath => {
-      const relativeFilePath = imagePath.match(/="(.*)"/)[1];
-
-      // update file paths
-      contents = contents.replace(
-        relativeFilePath,
-        path.basename(relativeFilePath)
-      );
-
-      const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-      return filePath;
-    })
-    : [];
-
-  // update the paths inside the html file
-  file.contents = Buffer.from(contents);
-
-  return stream;
-});
-
 const html = () =>
   src(`${SRC}/${VIEWS}/**.html`)
     .pipe(htmlmin({
       removeComments: true,
     }))
-    .pipe(updateFilePaths)
+    .pipe(flatmap((stream, file) => {
+      let contents = file.contents.toString('utf8');
+
+      // get js files paths
+      const jsFileMatches = contents.match(/src=".*\.js"/g);
+      jsPaths = jsFileMatches
+        ? jsFileMatches.map(jsFileMatch => {
+          // create a js bundle
+          const relativeFilePath = jsFileMatch.match(/src="(.*)"/)[1];
+
+          // update file paths
+          contents = contents.replace(
+            relativeFilePath,
+            path.basename(relativeFilePath)
+          );
+
+          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+          return filePath;
+        })
+        : [];
+
+      // get stylesheets paths
+      const stylesheetMatches = contents.match(/href=".*\.(css|sass|scss)"/g);
+      stylesheetPaths = stylesheetMatches
+        ? stylesheetMatches.map(stylesheetMatch => {
+          const relativeFilePath = stylesheetMatch.match(/href="(.*)"/)[1];
+
+          // update file paths
+          contents = contents.replace(
+            relativeFilePath,
+            path
+              .basename(relativeFilePath)
+              .replace(/\.(scss|sass)$/, '.css')
+          );
+
+          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+          return filePath;
+        })
+        : [];
+
+      // get image paths
+      const images = contents.match(/=".*\.(jpeg|jpg|png|gif|svg|webp)"/gi);
+      imagePaths = images
+        ? images.map(imagePath => {
+          const relativeFilePath = imagePath.match(/="(.*)"/)[1];
+
+          // update file paths
+          contents = contents.replace(
+            relativeFilePath,
+            path.basename(relativeFilePath)
+          );
+
+          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+          return filePath;
+        })
+        : [];
+
+      // update the paths inside the html file
+      file.contents = Buffer.from(contents);
+
+      return stream;
+    }))
     .pipe(dest(DEST));
 
 const bundle = series(html, parallel(js, stylesheets, images));

@@ -1,26 +1,5 @@
-$body-bg: #ebe7df;
-$body-color: #242424;
-
-$theme-colors: (
-  "primary": #57c5a0,
-  "danger": #ff4136,
-  "dark": #2e2e2e,
-  "accent": #f27e4b,
-  "white": #fff,
-  "grey": #adadad
-);
-
-@import "bootstrap/scss/bootstrap";
-
-$light: map-get(
-  $map: $theme-colors,
-  $key: light
-);
-
-$dark: map-get(
-  $map: $theme-colors,
-  $key: dark
-);
+@import 'variables.scss';
+@import 'bootstrap/scss/bootstrap';
 
 .navbar {
   &-dark,

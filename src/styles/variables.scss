@@ -20,4 +20,16 @@ $dark: map-get(
   $key: dark,
 );
 
+$primary: map-get(
+  $map: $theme-colors,
+  $key: primary,
+);
+
+$white: map-get(
+  $map: $theme-colors,
+  $key: white,
+);
+
 $navbar-height: 7rem;
+
+$price-box-size: 5rem;

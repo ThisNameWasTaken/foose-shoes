@@ -1,0 +1,14 @@
+@import '../variables.scss';
+
+.price-box {
+  width: $price-box-size;
+  height: $price-box-size;
+  background-color: $primary;
+  display: flex;
+}
+
+.price-box__price {
+  margin: auto;
+  color: white;
+  font-weight: bold;
+}

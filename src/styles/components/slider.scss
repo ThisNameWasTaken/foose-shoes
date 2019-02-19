@@ -1,0 +1,29 @@
+@import '../variables.scss';
+
+.slider {
+  &__controls {
+    background-color: #2e2e2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__control {
+      border: none;
+      border-top: 4px solid #111;
+      color: white;
+      background: transparent;
+      font-weight: 400;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      opacity: 0.8;
+      &:focus,
+      &:hover {
+        opacity: 0.9;
+        border-top: 4px solid $primary;
+      }
+      &--active {
+        border-top: 4px solid $primary;
+        opacity: 1;
+      }
+    }
+  }
+}

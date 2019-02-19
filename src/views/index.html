@@ -7,8 +7,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="../styles/index.scss" />
   </head>
-  <body>
-    <nav class="position-fixed w-100">
+  <body class="navbar-offset">
+    <nav class="position-fixed fixed-top w-100">
       <div class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
           <a class="navbar-brand text-primary text-uppercase" href="/">
@@ -68,6 +68,43 @@
         </div>
       </div>
     </nav>
+
+    <main>
+      <div class="slider">
+        <div class="slider__slide container">
+          <div class="jumbotron bg-transparent ml-auto w-50">
+            <div class="price-box">
+              <div class="price-box__price">145.99</div>
+            </div>
+            <h1 class="display-4 font-weight-normal">Pink Shoes 2013 Collection</h1>
+            <p class="h5 font-weight-normal mb-4">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi doloribus saepe, dicta dolorem nostrum vitae perferendis.
+            </p>
+            <button class="btn btn-light">eye</button>
+            <button class="btn btn-light">start_outlined</button>
+            <button class="btn btn-light">share</button>
+            <button class="btn btn-light">cart</button>
+          </div>
+        </div>
+  
+        <div class="slider__controls">
+          <button class="slider__controls__control slider__controls__control--active">
+            <div class="h4 mb-0">Pink Shoes</div>
+            <div class="h6 text-grey">Now at $145.99</div>
+          </button>
+          <button class="slider__controls__control">
+            <div class="h4 mb-0">Ana Field</div>
+            <div class="h6 text-grey">Limited Edition</div>
+          </button>
+          <button class="slider__controls__control">
+            <div class="h4 mb-0">Prada</div>
+            <div class="h6 text-grey">Summer is coming</div>
+          </button>
+        </div>
+      </div>
+      <div class="other-shoes" style="height: 3rem; background: #242424"></div>
+    </main>
+
     <script async defer src="../js/index.js"></script>
   </body>
 </html>

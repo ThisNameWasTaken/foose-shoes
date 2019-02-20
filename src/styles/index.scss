@@ -5,15 +5,6 @@
 @import 'components/slider.scss';
 @import 'components/special-offers.scss';
 
-.navbar {
-  &-dark,
-  &-light {
-    .navbar-toggler {
-      border-color: transparent;
-    }
-  }
-}
-
 .form-control-dark {
   background-color: $dark;
   color: $light;
@@ -25,20 +16,5 @@
   }
   &::placeholder {
     color: $light;
-  }
-}
-
-.navbar-light {
-  .navbar-nav {
-    .nav-link {
-      color: $dark;
-    }
-    .nav-item {
-      &.active {
-        .nav-link {
-          color: $primary;
-        }
-      }
-    }
   }
 }

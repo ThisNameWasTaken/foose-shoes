@@ -3,3 +3,27 @@
 .navbar-offset {
   margin-top: $navbar-height;
 }
+
+.navbar {
+  &-dark,
+  &-light {
+    .navbar-toggler {
+      border-color: transparent;
+    }
+  }
+}
+
+.navbar-light {
+  .navbar-nav {
+    .nav-link {
+      color: $dark;
+    }
+    .nav-item {
+      &.active {
+        .nav-link {
+          color: $primary;
+        }
+      }
+    }
+  }
+}

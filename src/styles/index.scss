@@ -6,6 +6,8 @@
 @import 'components/slider.scss';
 @import 'components/special-offers.scss';
 @import 'components/shoe-card.scss';
+@import 'components/list.scss';
+@import 'utils.scss';
 
 .form-control-dark {
   @include fill($dark);

@@ -3,12 +3,18 @@
 .price-box {
   width: $price-box-size;
   height: $price-box-size;
-  background-color: $primary;
   display: flex;
-}
-
-.price-box__price {
-  margin: auto;
-  color: white;
-  font-weight: bold;
+  @include fill($primary);
+  @each $name, $color in $theme-colors {
+    &--#{$name} {
+      @include fill($color);
+    }
+  }
+  &__price {
+    margin: auto;
+    color: inherit;
+    font-weight: 600;
+    text-align: center;
+    color: inherit;
+  }
 }

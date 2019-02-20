@@ -1,3 +1,4 @@
+@import 'bootstrap/scss/mixins';
 @import '../variables.scss';
 
 .slider {
@@ -23,6 +24,15 @@
       &--active {
         border-top: 4px solid $primary;
         opacity: 1;
+      }
+    }
+  }
+  &__slide {
+    & > .jumbotron {
+      background: transparent;
+      @include media-breakpoint-up(lg) {
+        margin-left: auto;
+        width: 50%;
       }
     }
   }

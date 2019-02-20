@@ -1,20 +1,24 @@
+@import 'mixins.scss';
 @import 'variables.scss';
 @import 'bootstrap/scss/bootstrap';
 @import 'components/navbar.scss';
 @import 'components/pricebox.scss';
 @import 'components/slider.scss';
 @import 'components/special-offers.scss';
+@import 'components/shoe-card.scss';
 
 .form-control-dark {
-  background-color: $dark;
-  color: $light;
+  @include fill($dark);
   text-align: right;
   border-color: $light;
   &:focus {
-    background-color: $dark;
-    color: $light;
+    @include fill($dark);
   }
   &::placeholder {
-    color: $light;
+    @include color($dark);
   }
+}
+
+::selection {
+  @include fill($primary);
 }

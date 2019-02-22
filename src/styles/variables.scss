@@ -9,6 +9,7 @@ $theme-colors: (
   'accent': #f27e4b,
   'white': #fff,
   'grey': #adadad,
+  'dark-grey': #7d7d7d,
   'light-grey': #dfdbd4,
 );
 
@@ -29,9 +30,17 @@ $primary: map-get(
 
 $white: map-get(
   $map: $theme-colors,
-  $key: white,
+  $key: 'white',
+);
+
+$dark-grey: map-get(
+  $map: $theme-colors,
+  $key: dark-grey,
 );
 
 $navbar-height: 7rem;
 
 $price-box-size: 5rem;
+
+$footer-bottom-color: $dark;
+$footer-top-color: #242424;

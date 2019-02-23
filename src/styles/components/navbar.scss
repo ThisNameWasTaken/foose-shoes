@@ -1,29 +1,69 @@
 @import '../variables.scss';
 
 .navbar-offset {
-  margin-top: $navbar-height;
+  margin-top: $navbar-height * 2;
 }
 
 .navbar {
-  &-dark,
-  &-light {
-    .navbar-toggler {
-      border-color: transparent;
+  padding: 0;
+  margin: 0;
+  line-height: $navbar-height;
+  &,
+  & > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  & > .container {
+    padding: 0;
+  }
+  &__left {
+    @include media-breakpoint-down(sm) {
+      display: none;
     }
   }
-}
-
-.navbar-light {
-  .navbar-nav {
-    .nav-link {
-      color: $dark;
+  &__right {
+  }
+  &__brand {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 2rem;
+    @include media-breakpoint-down(sm) {
+      font-size: 1.5rem;
     }
-    .nav-item {
-      &.active {
-        .nav-link {
-          color: $primary;
-        }
-      }
+  }
+  ul,
+  ol {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    display: inline;
+  }
+  &__item {
+    float: left;
+    display: block;
+    padding: 0rem 1rem;
+    margin: 0;
+    @include fill($navbar-item-background-color);
+    &:hover,
+    &:focus {
+      @include fill(lighten($navbar-item-background-color, 10%));
     }
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  &__menu {
+    @extend .navbar__item;
+    display: none;
+    @include media-breakpoint-down(sm) {
+      display: block;
+    }
+    width: $navbar-height;
+    height: $navbar-height;
+    border: none;
   }
 }

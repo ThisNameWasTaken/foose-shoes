@@ -52,3 +52,36 @@
     margin-left: auto;
   }
 }
+
+#search-text-field {
+  border-radius: 0;
+  height: $navbar-height;
+  text-align: left;
+  padding: 1rem 2rem;
+  padding-right: 4rem;
+  max-width: 220px;
+  @include media-breakpoint-down(sm) {
+    display: none;
+  }
+}
+
+#open-text-field-search-button-li {
+  display: none;
+  @include media-breakpoint-down(sm) {
+    display: initial;
+  }
+}
+
+#open-text-field-search-button {
+  width: $navbar-height;
+  height: $navbar-height;
+  border: none;
+  display: none;
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
+
+#login-or-register-button {
+  border: none;
+}

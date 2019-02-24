@@ -56,7 +56,7 @@
       &--animating {
         transition: transform 0.3s ease-in-out;
       }
-      &--slide-from-left {
+      &--slide-to-left {
         transform: translateX(-100%);
       }
       &--slide-from-right {

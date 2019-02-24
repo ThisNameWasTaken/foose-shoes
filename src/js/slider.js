@@ -3,129 +3,139 @@ const CSS_CLASSES = {
   SLIDES_CONTAINER: `slider__slides`,
   SLIDE: `slider__slides__slide`,
   ANIMATING: `slider__slides__slide--animating`,
-  SLIDE_FROM_LEFT: `slider__slides__slide--slide-from-left`,
+  SLIDE_TO_LEFT: `slider__slides__slide--slide-to-left`,
   SLIDE_FROM_RIGHT: `slider__slides__slide--slide-from-right`,
 };
 
-const slider = document.querySelector(`.${CSS_CLASSES.SLIDER}`);
-const slidesContainer = slider.querySelector(`.${CSS_CLASSES.SLIDES_CONTAINER}`);
-const slides = slider.querySelectorAll(`.${CSS_CLASSES.SLIDE}`);
+class Slider {
+  static lorem = '';
+}
 
-let activeSlideIndex = 0;
-let nextSlideIndex = 0;
+const _slider = document.querySelector(`.${CSS_CLASSES.SLIDER}`);
+const _slidesContainer = _slider.querySelector(`.${CSS_CLASSES.SLIDES_CONTAINER}`);
+const _slides = _slider.querySelectorAll(`.${CSS_CLASSES.SLIDE}`);
 
-const nextSlideTimeout = 2000; // intervalul intre care se schimba slide-urile
+let _activeSlideIndex = 0;
+let _nextSlideIndex = 0;
 
-slidesContainer.setAttribute('role', 'listbox');
-slidesContainer.setAttribute('aria-live', 'polite');
+const _nextSlideTimeout = 2000; // The interval between switching to the next slide.
 
-slides.forEach(slide => {
-  slide.setAttribute('role', 'option');
-  slide.setAttribute('aria-hidden', 'true');
+// Set the aria attributes for the slider container
+_slidesContainer.setAttribute('role', 'listbox');
+_slidesContainer.setAttribute('aria-live', 'polite');
 
-  slide.addEventListener('transitionend', () => {
-    // cand se termina tranzitia
-    if (!slide.classList.contains(CSS_CLASSES.SLIDE_FROM_LEFT)) {
-      return;
-    } // daca nu e slide care a trecut in stanga il ignoram
+[..._slides].forEach(slide => {
+  requestAnimationFrame(() => {
+    slide.setAttribute('role', 'option'); // Add a proper aria role.
+    slide.setAttribute('aria-hidden', 'true'); // Hide the slide from the screen readers.
+    slide.setAttribute('tabindex', '-1'); // Remove the ability to focus elements inside the slide.
 
-    // il mutam la dreapta fara tranzitie (il "teleportam")
-    slide.classList.remove(CSS_CLASSES.ANIMATING);
-    slide.classList.remove(CSS_CLASSES.SLIDE_FROM_LEFT);
-    slide.classList.add(CSS_CLASSES.SLIDE_FROM_RIGHT);
+    slide.addEventListener('transitionend', () => {
+      // If it's not a left slide.
+      if (!slide.classList.contains(CSS_CLASSES.SLIDE_TO_LEFT)) {
+        return; // Ignore it.
+      }
 
-    // ii redam tranzitia dupa ce l-am mutat
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => slide.classList.add(CSS_CLASSES.ANIMATING))
-    );
+      // Move it to the right without animating it.
+      slide.classList.remove(CSS_CLASSES.ANIMATING);
+      slide.classList.remove(CSS_CLASSES.SLIDE_TO_LEFT);
+      slide.classList.add(CSS_CLASSES.SLIDE_FROM_RIGHT);
+
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const isActiveSlide = slide.getAttribute('aria-hidden') === 'false';
+          if (isActiveSlide) {
+            // If the active slide was moved to the right
+            slide.classList.remove(CSS_CLASSES.SLIDE_FROM_RIGHT); // Move it to the center.
+          }
+          slide.classList.add(CSS_CLASSES.ANIMATING); // Restore the animations.
+        })
+      );
+    });
   });
 });
 
-function slideFromRight(index) {
-  const activeSlide = slides[activeSlideIndex];
+function _slideFromRight(index) {
+  requestAnimationFrame(() => {
+    const activeSlide = _slides[_activeSlideIndex];
 
-  activeSlide.classList.add(CSS_CLASSES.ANIMATING); // in cazul in care tranzitiile erau dezactivate, le reactivam
-  activeSlide.classList.add(CSS_CLASSES.SLIDE_FROM_LEFT); // mutam slide-ul curent in stanga
+    _nextSlideIndex = index % _slides.length;
 
-  nextSlideIndex = index % slides.length;
+    const nextSlide = _slides[_nextSlideIndex];
 
-  const nextSlide = slides[nextSlideIndex];
+    activeSlide.setAttribute('aria-hidden', 'true'); // Show on screen readers.
+    nextSlide.setAttribute('aria-hidden', 'false'); // Hide from screen readers.
 
-  // nextSlide = activeSlide.nextElementSibling || slides[0]; // daca nu mai avem slide mai la dreapta, urmatorul slide este primul
+    activeSlide.removeAttribute('tabindex'); // Restore focus.
+    nextSlide.setAttribute('tabindex', '-1'); // Remove the ability to focus elements inside the next slide.
 
-  nextSlide.classList.add(CSS_CLASSES.ANIMATING); // reactivam tranzitiile pentru slide-ul din dreapta
-  nextSlide.classList.remove(CSS_CLASSES.SLIDE_FROM_RIGHT); // il aducem din dreapta, in mijloc
+    activeSlide.classList.add(CSS_CLASSES.ANIMATING); // Enable animations.
+    activeSlide.classList.add(CSS_CLASSES.SLIDE_TO_LEFT); // Slide to the left.
 
-  activeSlide.setAttribute('aria-hidden', 'true');
-  nextSlide.setAttribute('aria-hidden', 'false');
+    nextSlide.classList.add(CSS_CLASSES.ANIMATING); // Enable animations for the next slide.
+    nextSlide.classList.remove(CSS_CLASSES.SLIDE_FROM_RIGHT); // Slide from the right.
 
-  activeSlideIndex = nextSlideIndex; // trecem mai departe
+    _activeSlideIndex = _nextSlideIndex; // Update the active index.
+  });
 }
 
-function slideFromLeft(index) {
-  const nextSlide = slides[activeSlideIndex];
-  nextSlideIndex = activeSlideIndex;
+function _slideFromLeft(index) {
+  requestAnimationFrame(() => {
+    const activeSlide = _slides[_activeSlideIndex];
+    _nextSlideIndex = _activeSlideIndex;
 
-  activeSlideIndex = index;
-  if (activeSlideIndex < 0) {
-    activeSlideIndex = slides.length - 1;
-  }
+    _activeSlideIndex = index;
+    if (_activeSlideIndex < 0) {
+      _activeSlideIndex = _slides.length - 1;
+    }
 
-  const activeSlide = slides[activeSlideIndex];
+    const nextSlide = _slides[_activeSlideIndex];
 
-  // nextSlide = activeSlide; // slide-ul care trece in dreapta este cel curent
-  // activeSlide = activeSlide.previousElementSibling || slides[slides.length - 1]; // slide-ul curent este cel din stanga; daca nu mai sunt elemente in stanga, luam ultimul slide (ex: de la slide-ul 1 la slide-ul 5)
+    activeSlide.setAttribute('aria-hidden', 'true'); // Show on screen readers.
+    nextSlide.setAttribute('aria-hidden', 'false'); // Hide from screen readers.
 
-  activeSlide.setAttribute('aria-hidden', 'false');
-  nextSlide.setAttribute('aria-hidden', 'true');
+    activeSlide.removeAttribute('tabindex'); // Restore focus.
+    nextSlide.setAttribute('tabindex', '-1'); // Remove the ability to focus elements inside the next slide.
 
-  // slide-ul curent desi vine din stanga, a fost "teleportat" in dreapta
-  // trebuie sa il "teleportam" inapoi in stanga ca sa putem sa facem tranzitia
-  activeSlide.classList.add(CSS_CLASSES.SLIDE_FROM_LEFT);
-  activeSlide.classList.remove(CSS_CLASSES.ANIMATING);
-  activeSlide.classList.remove(CSS_CLASSES.SLIDE_FROM_RIGHT);
+    // Move the left slide to the left without animations
+    nextSlide.classList.add(CSS_CLASSES.SLIDE_TO_LEFT);
+    nextSlide.classList.remove(CSS_CLASSES.ANIMATING);
+    nextSlide.classList.remove(CSS_CLASSES.SLIDE_FROM_RIGHT);
 
-  requestAnimationFrame(() =>
-    requestAnimationFrame(() => {
-      // mutam slide-ul din centru spre dreapta
-      nextSlide.classList.add(CSS_CLASSES.SLIDE_FROM_RIGHT);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        activeSlide.classList.add(CSS_CLASSES.SLIDE_FROM_RIGHT); // Move the center slide to the right
 
-      // reactivam tranzitia pentru slide-ul curent si il mutam de la stanga spre centru
-      activeSlide.classList.add(CSS_CLASSES.ANIMATING);
-      activeSlide.classList.remove(CSS_CLASSES.SLIDE_FROM_LEFT);
-    })
-  );
+        nextSlide.classList.add(CSS_CLASSES.ANIMATING); // Restore animations for the current slide.
+        nextSlide.classList.remove(CSS_CLASSES.SLIDE_TO_LEFT); // Slide it from the left.
+      })
+    );
+  });
 }
 
 function showSlide(index) {
-  index > activeSlideIndex ? slideFromRight(index) : slideFromLeft(index);
+  index > _activeSlideIndex ? _slideFromRight(index) : _slideFromLeft(index);
 }
 
 function showNextSlide() {
-  showSlide(activeSlideIndex + 1); // treci la slide-ul urmator
+  showSlide(_activeSlideIndex + 1);
 }
 
 function showPreviousSlide() {
-  showSlide(activeSlideIndex - 1); // treci la slide-ul precedent
+  showSlide(_activeSlideIndex - 1);
 }
-
-let interval = setInterval(showNextSlide, nextSlideTimeout); // muta automat slide-urile
 
 window.addEventListener('keyup', event => {
   switch (event.key) {
     case 'ArrowLeft':
-      showSlide(activeSlideIndex - 1); // treci la slide-ul precedent
+      showSlide(_activeSlideIndex - 1);
       break;
 
     case 'ArrowRight':
-      showSlide(activeSlideIndex + 1); // treci la slide-ul urmator
+      showSlide(_activeSlideIndex + 1);
       break;
 
     default:
       break;
   }
-
-  // reseteaza intervalul
-  clearInterval(interval);
-  interval = setInterval(showNextSlide, nextSlideTimeout);
 });

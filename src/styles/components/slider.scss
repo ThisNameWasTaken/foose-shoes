@@ -2,6 +2,7 @@
 @import '../variables.scss';
 
 .slider {
+  position: relative;
   &__controls {
     background-color: #2e2e2e;
     display: flex;
@@ -42,12 +43,31 @@
       }
     }
   }
-  &__slide {
-    & > .jumbotron {
-      background: transparent;
-      @include media-breakpoint-up(lg) {
-        margin-left: auto;
-        width: 50%;
+  &__slides {
+    position: relative;
+    height: 600px;
+    overflow: hidden;
+    &__slide {
+      top: 0;
+      left: 0;
+      position: absolute;
+      display: flex;
+      transform: translateX(0%);
+      &--animating {
+        transition: transform 0.3s ease-in-out;
+      }
+      &--slide-from-left {
+        transform: translateX(-100%);
+      }
+      &--slide-from-right {
+        transform: translateX(100%);
+      }
+      & > .jumbotron {
+        background: transparent;
+        @include media-breakpoint-up(lg) {
+          margin-left: auto;
+          width: 50%;
+        }
       }
     }
   }

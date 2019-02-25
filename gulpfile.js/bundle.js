@@ -69,9 +69,13 @@ const stylesheets = done => {
     .pipe(postcss()) // minify and auto-prefix styles
     .pipe(IF(IS_PROD, purgecss({ // remove unused styles in production
       content: [
-        path.join(__dirname, `../${SRC}/**/*.{html}`),
-        path.join(__dirname, `../${SRC}/**/*.{js,mjs}`), // TODO: Add extractors that only looks at strings inside js files so that variable names and comment do not get picked up
+        `${SRC}/**/*.html`,
+        `${SRC}/**/*.{js,mjs}`,
+        // `./${SRC}/${JS}/**/*.{js,mjs}`, // TODO: Add extractors that only looks at strings inside js files so that variable names and comment do not get picked up
       ],
+      keyframes: true,
+      fontFace: true,
+      rejected: true,
     })))
     .pipe(rename({
       dirname: '', // remove nested folders from the file path
@@ -104,55 +108,62 @@ const html = () =>
       // get js files paths
       const jsFileMatches = contents.match(/src=".*\.js"/g);
       jsPaths = jsFileMatches
-        ? jsFileMatches.map(jsFileMatch => {
-          // create a js bundle
-          const relativeFilePath = jsFileMatch.match(/src="(.*)"/)[1];
+        ? jsFileMatches
+          .filter(jsFileMatch => !jsFileMatch.startsWith('src="http'))
+          .map(jsFileMatch => {
+            // create a js bundle
+            const relativeFilePath = jsFileMatch.match(/src="(.*)"/)[1];
 
-          // update file paths
-          contents = contents.replace(
-            relativeFilePath,
-            path.basename(relativeFilePath)
-          );
+            // update file paths
+            contents = contents.replace(
+              relativeFilePath,
+              path.basename(relativeFilePath)
+            );
 
-          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-          return filePath;
-        })
+            const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+            return filePath;
+          })
         : [];
 
       // get stylesheets paths
       const stylesheetMatches = contents.match(/href=".*\.(css|sass|scss)"/g);
+
       stylesheetPaths = stylesheetMatches
-        ? stylesheetMatches.map(stylesheetMatch => {
-          const relativeFilePath = stylesheetMatch.match(/href="(.*)"/)[1];
+        ? stylesheetMatches
+          .filter(stylesheetMatch => !stylesheetMatch.startsWith('href="http')) // filter out external sources
+          .map(stylesheetMatch => {
+            const relativeFilePath = stylesheetMatch.match(/href="(.*)"/)[1];
 
-          // update file paths
-          contents = contents.replace(
-            relativeFilePath,
-            path
-              .basename(relativeFilePath)
-              .replace(/\.(scss|sass)$/, '.css')
-          );
+            // update file paths
+            contents = contents.replace(
+              relativeFilePath,
+              path
+                .basename(relativeFilePath)
+                .replace(/\.(scss|sass)$/, '.css')
+            );
 
-          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-          return filePath;
-        })
+            const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+            return filePath;
+          })
         : [];
 
       // get image paths
       const images = contents.match(/=".*\.(jpeg|jpg|png|gif|svg|webp)"/gi);
       imagePaths = images
-        ? images.map(imagePath => {
-          const relativeFilePath = imagePath.match(/="(.*)"/)[1];
+        ? images
+          .filter(imagePath => !imagePath.startsWith('="http')) // filter out external sources
+          .map(imagePath => {
+            const relativeFilePath = imagePath.match(/="(.*)"/)[1];
 
-          // update file paths
-          contents = contents.replace(
-            relativeFilePath,
-            path.basename(relativeFilePath)
-          );
+            // update file paths
+            contents = contents.replace(
+              relativeFilePath,
+              path.basename(relativeFilePath)
+            );
 
-          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-          return filePath;
-        })
+            const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+            return filePath;
+          })
         : [];
 
       // update the paths inside the html file

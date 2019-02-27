@@ -49,6 +49,10 @@ const js = done => {
           _webpack
         ));
     }))
+    .on('error', function (error) {
+      console.log(error.toString());
+      this.emit('end');
+    })
     .pipe(rename({
       dirname: '', // remove nested folders from the file path
     }))

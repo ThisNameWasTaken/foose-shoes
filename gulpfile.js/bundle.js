@@ -1,5 +1,5 @@
 const { src, dest, series, parallel } = require('gulp');
-const { IS_PROD, DIR: { SRC, DEST, VIEWS } } = require('./constants');
+const { IS_PROD, DIR: { SRC, DEST, VIEWS, IMAGES } } = require('./constants');
 const path = require('path');
 const flatmap = require('gulp-flatmap');
 const rename = require('gulp-rename');
@@ -77,6 +77,42 @@ const stylesheets = done => {
       fontFace: true,
       rejected: true,
     })))
+    .pipe(flatmap((stream, file) => {
+      let contents = file.contents.toString('utf8');
+
+      // console.log(contents);
+
+      // get js files paths
+      const imageMatches = contents.match(/url\(["']?(.*?\.(jpeg|jpg|png|gif|svg|webp))["']?\)/gi);
+
+      if (imageMatches) {
+        imagePaths.push(
+          ... new Set(
+            imageMatches
+              .map(imageMatch => imageMatch.match(/url\(["']?(.*?\.(jpeg|jpg|png|gif|svg|webp))["']?\)/)[1])
+              .filter(imageUrl => !imageUrl.startsWith('http')) // filter out external sources
+              .map(relativeFilePath => {
+                // update file paths
+                contents = contents.replace(
+                  relativeFilePath,
+                  path.basename(relativeFilePath)
+                );
+
+                relativeFilePath = `./${IMAGES}/` + relativeFilePath.split(`${IMAGES}/`)[1];
+                const filePath = path.join(`./${SRC}`, relativeFilePath).replace(/\\/g, '/');
+                return filePath;
+              })
+          )
+        );
+      }
+
+      // update the paths inside the stylesheets
+      file.contents = Buffer.from(contents);
+
+      console.log(imagePaths)
+
+      return stream;
+    }))
     .pipe(rename({
       dirname: '', // remove nested folders from the file path
     }))
@@ -85,9 +121,13 @@ const stylesheets = done => {
 };
 
 const images = done => {
+  console.log(imagePaths)
+
   if (!imagePaths.length) { return done(); } // if there are no images, exit
 
   const imageGlob = imagePaths.join(',');
+
+  console.log(imageGlob)
 
   return src(imageGlob)
     .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production
@@ -173,7 +213,7 @@ const html = () =>
     }))
     .pipe(dest(DEST));
 
-const bundle = series(html, parallel(js, stylesheets, images));
+const bundle = series(html, parallel(js, stylesheets), images);
 
 module.exports = {
   html,

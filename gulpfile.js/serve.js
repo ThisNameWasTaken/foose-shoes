@@ -24,11 +24,11 @@ const serve = series(build, watchProd);
 
 // Development
 const watchDev = done => {
-  watch(`${SRC}/${VIEWS}/**/*.html`, html);
+  watch(`${SRC}/${VIEWS}/**/*.html`, bundle);
 
   watch(`${SRC}/${JS}/**/*.{js,mjs}`, js);
 
-  watch(`${SRC}/${STYLES}/**/*.{css,scss,sass}`, stylesheets);
+  watch(`${SRC}/${STYLES}/**/*.{css,scss,sass}`, series(stylesheets, images));
 
   watch(`${SRC}/${IMAGES}/**/*.{jpg,jpeg,png,svg,gif,webp}`, images);
 

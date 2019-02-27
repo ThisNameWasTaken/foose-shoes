@@ -6,6 +6,9 @@
   &__media {
     width: 100%;
     padding-top: 70%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
   &__actions {
     @include fill(white);

@@ -1,5 +1,5 @@
 const { src, dest, series, parallel } = require('gulp');
-const { IS_PROD, DIR: { SRC, DEST, VIEWS, IMAGES } } = require('./constants');
+const { IS_PROD, DIR: { SRC, DEST, VIEWS, JS, STYLES, IMAGES } } = require('./constants');
 const path = require('path');
 const flatmap = require('gulp-flatmap');
 const rename = require('gulp-rename');
@@ -37,7 +37,15 @@ const imageminOptions = [
 const js = done => {
   if (!jsPaths.length) { return done(); } // if there are no js files to be bundled, exit
 
-  const jsBlob = jsPaths.join(',');
+  const jsBlob = jsPaths.length === 1 // if there is only one file
+    ? jsPaths[0] // return the path to that file
+    : `${SRC}/${JS}/{${ // else create a glob that points to those files
+    jsPaths.map(jsPath =>
+      jsPath
+        .replace(/\\/g, '/')
+        .replace(`${SRC}/${JS}/`, ''))
+      .join(',')
+    }}`;
 
   return src(jsBlob)
     .pipe(flatmap((stream, file) => { // create a bundle for each js file
@@ -62,7 +70,15 @@ const js = done => {
 const stylesheets = done => {
   if (!stylesheetPaths.length) { return done(); } // if there are no stylesheets, exit
 
-  const stylesheetGlob = stylesheetPaths.join(',');
+  const stylesheetGlob = stylesheetPaths.length === 1 // if there is only one file
+    ? stylesheetPaths[0] // return the path to that file
+    : `${SRC}/${STYLES}/{${ // else create a glob that points to those files
+    stylesheetPaths.map(stylesheetPath =>
+      stylesheetPath
+        .replace(/\\/g, '/')
+        .replace(`${SRC}/${STYLES}/`, ''))
+      .join(',')
+    }}`;
 
   return src(stylesheetGlob)
     .pipe(sass({
@@ -123,7 +139,15 @@ const stylesheets = done => {
 const images = done => {
   if (!imagePaths.length) { return done(); } // if there are no images, exit
 
-  const imageGlob = imagePaths.join(',');
+  const imageGlob = imagePaths.length === 1 // if there is only one file
+    ? imagePaths[0] // return the path to that file
+    : `${SRC}/${IMAGES}/{${ // else create a glob that points to those files
+    imagePaths.map(imagePath =>
+      imagePath
+        .replace(/\\/g, '/')
+        .replace(`${SRC}/${IMAGES}/`, ''))
+      .join(',')
+    }}`;
 
   return src(imageGlob)
     .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production

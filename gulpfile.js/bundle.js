@@ -80,8 +80,6 @@ const stylesheets = done => {
     .pipe(flatmap((stream, file) => {
       let contents = file.contents.toString('utf8');
 
-      // console.log(contents);
-
       // get js files paths
       const imageMatches = contents.match(/url\(["']?(.*?\.(jpeg|jpg|png|gif|svg|webp))["']?\)/gi);
 
@@ -109,8 +107,6 @@ const stylesheets = done => {
       // update the paths inside the stylesheets
       file.contents = Buffer.from(contents);
 
-      console.log(imagePaths)
-
       return stream;
     }))
     .pipe(rename({
@@ -121,13 +117,9 @@ const stylesheets = done => {
 };
 
 const images = done => {
-  console.log(imagePaths)
-
   if (!imagePaths.length) { return done(); } // if there are no images, exit
 
   const imageGlob = imagePaths.join(',');
-
-  console.log(imageGlob)
 
   return src(imageGlob)
     .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production
@@ -188,22 +180,27 @@ const html = () =>
         : [];
 
       // get image paths
-      const images = contents.match(/=".*\.(jpeg|jpg|png|gif|svg|webp)"/gi);
+      const images = contents.match(/=["']*?.*?\.(jpeg|jpg|png|gif|svg|webp)["']*?/gi);
+
       imagePaths = images
-        ? images
-          .filter(imagePath => !imagePath.startsWith('="http')) // filter out external sources
-          .map(imagePath => {
-            const relativeFilePath = imagePath.match(/="(.*)"/)[1];
+        ? [
+          ... new Set(
+            images
+              .filter(imagePath => !imagePath.startsWith('="http')) // filter out external sources
+              .map(imagePath => {
+                const relativeFilePath = imagePath.match(/[^"']*?\.(jpeg|jpg|png|gif|svg|webp)/i)[0];
 
-            // update file paths
-            contents = contents.replace(
-              relativeFilePath,
-              path.basename(relativeFilePath)
-            );
+                // update file paths
+                contents = contents.replace(
+                  relativeFilePath,
+                  path.basename(relativeFilePath)
+                );
 
-            const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-            return filePath;
-          })
+                const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+                return filePath;
+              })
+          )
+        ]
         : [];
 
       // update the paths inside the html file

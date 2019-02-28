@@ -37,16 +37,14 @@ import html from '../utils/html';
         item.addEventListener('transitionend', () => {
           item.remove();
 
-          // if we reached the end.
-          if (currentNewsIndex + 2 > blogNews.length) {
-            // go back to the start
-            currentNewsIndex = 0;
-          }
+          currentNewsIndex %= blogNews.length;
 
           blogNewsList.innerHTML = blogNews
-            .slice(currentNewsIndex, (currentNewsIndex += displayedNewsLength))
+            .slice(currentNewsIndex, currentNewsIndex + displayedNewsLength)
             .map(item => listItemTemplate(item))
             .join('');
+
+          currentNewsIndex++;
 
           requestAnimationFrame(() =>
             requestAnimationFrame(() => {

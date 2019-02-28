@@ -1,0 +1,10 @@
+.tweet {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  &--enter {
+    opacity: 1;
+  }
+  &--exit {
+    opacity: 0;
+  }
+}

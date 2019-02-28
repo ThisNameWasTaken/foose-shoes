@@ -1,0 +1,94 @@
+.shoe-card {
+  @include fill(white);
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  &__media {
+    width: 100%;
+    padding-top: 70%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  &__actions {
+    @include fill(white);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    padding-left: 7rem;
+    border-top: 1px solid rgba($dark, 0.24);
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    @include media-breakpoint-up(xs) {
+      padding: 1rem 5rem;
+      padding-left: 9rem;
+    }
+    @include media-breakpoint-up(md) {
+      padding: 1rem;
+      padding-left: 8rem;
+    }
+    @include media-breakpoint-up(lg) {
+      padding: 1rem;
+      padding-left: 7rem;
+    }
+    @include media-breakpoint-up(xl) {
+      padding: 1rem 2rem;
+      padding-left: 8rem;
+    }
+    &__action {
+      position: relative;
+      width: 2rem;
+      height: 2rem;
+      &:hover,
+      &:focus {
+        color: $primary;
+      }
+      & > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        margin: auto;
+      }
+    }
+  }
+  &:focus &,
+  &:hover & {
+    &__actions {
+      transform: translateY(0%);
+    }
+  }
+  &__title {
+    border-top: 1px solid rgba($dark, 0.24);
+    padding: 1rem 2rem;
+    padding-left: 7rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  &__price {
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    z-index: 3;
+  }
+  &__badge {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    z-index: 3;
+  }
+  &--list & {
+    display: flex;
+    &__media {
+      width: 30%;
+      padding-top: 25%;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 const { watch, series } = require('gulp');
-const { DIR: { SRC, DEST, VIEWS, STYLES, JS, IMAGES }, SERVER: { CORS, PORT, HTTPS } } = require('./constants');
-const { bundle, html, js, stylesheets, images } = require('./bundle');
+const { DIR: { SRC, DEST, VIEWS, STYLES, JS, IMAGES, DATA }, SERVER: { CORS, PORT, HTTPS } } = require('./constants');
+const { bundle, html, js, stylesheets, images, json } = require('./bundle');
 const browserSync = require('./browserSyncInstance');
 const build = require('./build');
 
@@ -24,11 +24,13 @@ const serve = series(build, watchProd);
 
 // Development
 const watchDev = done => {
-  watch(`${SRC}/${VIEWS}/**/*.html`, html);
+  watch(`${SRC}/${VIEWS}/**/*.html`, bundle);
 
-  watch(`${SRC}/${JS}/**/*.{js,mjs}`, js);
+  watch(`${SRC}/${JS}/**/*.{js,mjs}`, series(js, json));
 
-  watch(`${SRC}/${STYLES}/**/*.{css,scss,sass}`, stylesheets);
+  watch(`${SRC}/${DATA}/**/*.{json}`, json);
+
+  watch(`${SRC}/${STYLES}/**/*.{css,scss,sass}`, series(stylesheets, images));
 
   watch(`${SRC}/${IMAGES}/**/*.{jpg,jpeg,png,svg,gif,webp}`, images);
 

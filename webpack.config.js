@@ -33,7 +33,7 @@ module.exports = {
           compress: {
             dead_code: true, // remove unreachable code
             toplevel: true, // drop unreferenced functions and variables
-            drop_console: true, // discard calls to console.* functions
+            drop_console: IS_PROD, // discard calls to console.* functions
           },
           mangle: {
             toplevel: true, // mangle names declared in the top level scope

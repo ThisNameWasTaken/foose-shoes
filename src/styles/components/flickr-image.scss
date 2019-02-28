@@ -1,0 +1,16 @@
+.flickr-image {
+  background-color: $white;
+  width: 100%;
+  padding-top: 75%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: zoom-in;
+}
+
+.flickr-modal__image {
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+  display: block;
+}

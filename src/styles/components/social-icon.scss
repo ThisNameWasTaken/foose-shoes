@@ -1,0 +1,21 @@
+.social-icon {
+  // @include fill(#2e2e2e);
+  background: #2e2e2e;
+  color: $grey;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0;
+  display: inline-flex;
+  & > * {
+    margin: auto;
+    text-align: center;
+  }
+  &,
+  a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+    font-size: 1.5rem;
+  }
+}

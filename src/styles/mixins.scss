@@ -1,0 +1,10 @@
+@import 'functions.scss';
+
+@mixin fill($color) {
+  background: $color;
+  color: contrast-color($color);
+}
+
+@mixin color($background-color) {
+  color: contrast-color($background-color);
+}

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/index.scss" />
+  <link rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
+</head>
+<body class="navbar-offset">
+  <div class="modal flickr-modal" aria-hidden="true" id="flickr-modal">
+    <div class="modal__backdrop"></div>
+    <div class="modal__content container">
+      <img src="" alt="" class="flickr-modal__image">
+    </div>
+    <button class="btn text-light modal__close-button" aria-label="close modal">
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="modal login-or-register-modal" aria-hidden="true" id="login-or-register-modal">
+      <div class="modal__backdrop"></div>
+      <div class="modal__content login-or-register-modal__content container">
+        <form>
+          <div class="form-group">
+            <label for="email" class="font-weight-bold">Email</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="password" class="font-weight-bold">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+      </div>
+      <button class="btn text-light modal__close-button" aria-label="close modal">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="modal mobile-menu-modal" aria-hidden="true" id="mobile-menu-modal">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content container">
+            <ul>
+                <li>
+                  <a class="navbar__item" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="products.html">Products</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">About</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Pages</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Blog</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Contact</a>
+                </li>
+              </ul>
+        </div>
+        <button class="btn text-light modal__close-button" aria-label="close modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
+  <nav class="position-fixed fixed-top w-100">
+    <div class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar__brand text-primary" href="/">
+            FooseShoes
+          </a>
+
+        <form class="form-inline">
+          <span class="search-text-field">
+            <input
+              class="form-control form-control-dark search-text-field__input"
+              type="search"
+              placeholder="SEARCH"
+              aria-label="search text field"
+              autocomplete="off"
+              id="search-text-field"
+            />
+            <button
+              class="btn search-text-field__button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path fill="currentColor"
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+              </svg>
+            </button>
+            <div class="search-text-field__results">
+              <div class="search-text-field__results__result">Men Shoes</div>
+              <div class="search-text-field__results__result">Kids</div>
+            </div>
+          </span>
+          <button
+            class="btn"
+            id="login-or-register-button">
+            LOGIN or REGISTER
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="navbar navbar-expand-md navbar-light bg-light">
+      <div class="container" style="position: relative;">
+        <button class="navbar__menu" id="navbar-menu"><svg aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path fill="currentColor"
+              d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg></button>
+        <ul class="navbar__left">
+          <li>
+            <a class="navbar__item" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li>
+            <a class="navbar__item" href="products.html">Products</a>
+          </li>
+          <li>
+            <a class="navbar__item" href="#">About</a>
+          </li>
+          <li>
+            <a class="navbar__item" href="#">Pages</a>
+          </li>
+          <li>
+            <a class="navbar__item" href="#">Blog</a>
+          </li>
+          <li>
+            <a class="navbar__item" href="#">Contact</a>
+          </li>
+        </ul>
+        <ul class="navbar__right">
+          <li id="open-text-field-search-button-li">
+            <button class="navbar__item" id="open-text-field-search-button"><svg
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24">
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path fill="currentColor"
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+              </svg></button>
+              <input id="text-field-search" placeholder="SEARCH" type="search"/>
+          </li>
+          <li>
+            <a class="navbar__item" href="#">
+                  <svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg>
+                  <span class="badge badge-grey text-light">30</span>
+                </a>
+          </li>
+          <li>
+            <a class="navbar__item" href="#">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  <span class="badge badge-primary text-light">0</span>
+                </a>
+          </li>
+        </ul>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container" data-background-url="../images/slide-1-background.png" id="products-banner">
+      <div class="jumbotron bg-transparent">
+          <div class="price-box">
+            <div class="price-box__price text-white">145.99</div>
+          </div>
+          <h1 class="display-4 font-weight-normal">Pink Shoes 2013
+            Collection</h1>
+          <p class="h5 font-weight-normal mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi
+            doloribus saepe, dicta dolorem nostrum vitae perferendis.
+          </p>
+        </div>
+    </div>
+    <div class="bg-dark text-white">
+      <div class="container" id="filters">
+        <p class="h4 font-weight-normal m-0 d-inline-block">Shop by</p>
+        <div class="select-box">
+            <select name="" id="" class="select-box__select">
+              <option value="Brands" class="select-box__select__option">Brands</option>
+              <option value="Lorem" class="select-box__select__option">Lorem</option>
+              <option value="Fuga" class="select-box__select__option">Fuga</option>
+              <option value="Dolore" class="select-box__select__option">Dolore</option>
+            </select>
+            <div class="select-box__icon">
+              <i aria-hidden="true"><svg aria-hidden="true" width="1rem" height="1rem" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" class="svg-inline--fa fa-chevron-circle-down fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"></path></svg></i>
+            </div>
+          </div>
+          <div class="select-box">
+            <select name="" id="" class="select-box__select">
+              <option value="Brands" class="select-box__select__option">Brands</option>
+              <option value="Lorem" class="select-box__select__option">Lorem</option>
+              <option value="Fuga" class="select-box__select__option">Fuga</option>
+              <option value="Dolore" class="select-box__select__option">Dolore</option>
+            </select>
+            <div class="select-box__icon">
+              <i aria-hidden="true"><svg aria-hidden="true" width="1rem" height="1rem" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" class="svg-inline--fa fa-chevron-circle-down fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"></path></svg></i>
+            </div>
+          </div>
+          <div class="select-box">
+              <select name="" id="" class="select-box__select">
+                <option value="Categories" class="select-box__select__option">Categories</option>
+                <option value="Lorem" class="select-box__select__option">Lorem</option>
+                <option value="Fuga" class="select-box__select__option">Fuga</option>
+                <option value="Dolore" class="select-box__select__option">Dolore</option>
+              </select>
+              <div class="select-box__icon">
+                <i aria-hidden="true"><svg aria-hidden="true" width="1rem" height="1rem" focusable="false" data-prefix="fas" data-icon="chevron-circle-down" class="svg-inline--fa fa-chevron-circle-down fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zM273 369.9l135.5-135.5c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L256 285.1 154.4 183.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L239 369.9c9.4 9.4 24.6 9.4 34 0z"></path></svg></i>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="container">
+        <div class="container">
+            <div class="row-heading">
+              <h2 class="h4 font-weight-normal mt-2 mb-2 p-2">
+                All products
+              </h2>
+              <span>
+                <button class="btn btn-outline-grey grid-btn pl-4 pr-4" id="display-grid" aria-label="display as grid"><i class="fas fa-th-large" aria-hidden="true"></i></button>
+                <button class="btn btn-outline-grey grid-btn pl-4 pr-4" id="display-list" aria-label="display as list"><i class="fas fa-list-ul" aria-hidden="true"></i></button>
+              </span>
+            </div>
+            <div class="row no-gutters">
+              <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                <div class="shoe-card" tabindex="0">
+                  <div class="shoe-card__media" data-background-url="../images/shoe-1.png"></div>
+                  <div class="shoe-card__actions">
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                  </div>
+                  <h3 class="shoe-card__title">
+                    Even&Odd
+                  </h3>
+                  <div class="shoe-card__price">
+                    <div class="price-box">
+                      <div class="price-box__price text-white">
+                        $145.99
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                <div class="shoe-card" tabindex="0">
+                  <div class="shoe-card__media" data-background-url="../images/shoe-2.png"></div>
+                  <div class="shoe-card__actions">
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                  </div>
+                  <h3 class="shoe-card__title">
+                    Even&Odd
+                  </h3>
+                  <div class="shoe-card__price">
+                    <div class="price-box">
+                      <div class="price-box__price text-white">
+                        $145.99
+                      </div>
+                    </div>
+                  </div>
+                  <div class="shoe-card__badge">
+                    <div class="price-box price-box--dark">
+                      <div class="price-box__price text-white text-uppercase">
+                        on sale!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                <div class="shoe-card" tabindex="0">
+                  <div class="shoe-card__media" data-background-url="../images/shoe-3.png"></div>
+                  <div class="shoe-card__actions">
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                    <button
+                      class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                  </div>
+                  <h3 class="shoe-card__title">
+                    Buffalo Decollete
+                  </h3>
+                  <div class="shoe-card__price">
+                    <div class="price-box">
+                      <div class="price-box__price text-white">
+                        $145.99
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                  <div class="shoe-card" tabindex="0">
+                    <div class="shoe-card__media" data-background-url="../images/shoe-4.png"></div>
+                    <div class="shoe-card__actions">
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                    </div>
+                    <h3 class="shoe-card__title">
+                      Even&Odd
+                    </h3>
+                    <div class="shoe-card__price">
+                      <div class="price-box">
+                        <div class="price-box__price text-white">
+                          $145.99
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                  <div class="shoe-card" tabindex="0">
+                    <div class="shoe-card__media" data-background-url="../images/shoe-5.png"></div>
+                    <div class="shoe-card__actions">
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                    </div>
+                    <h3 class="shoe-card__title">
+                      Even&Odd
+                    </h3>
+                    <div class="shoe-card__price">
+                      <div class="price-box">
+                        <div class="price-box__price text-white">
+                          $145.99
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                  <div class="shoe-card" tabindex="0">
+                    <div class="shoe-card__media" data-background-url="../images/shoe-6.png"></div>
+                    <div class="shoe-card__actions">
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                    </div>
+                    <h3 class="shoe-card__title">
+                      Buffalo Decollete
+                    </h3>
+                    <div class="shoe-card__badge">
+                      <div class="price-box price-box--accent">
+                        <div class="price-box__price text-white text-uppercase text-white">
+                          out of stock
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shoe-card__price">
+                      <div class="price-box">
+                        <div class="price-box__price text-white">
+                          $145.99
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                  <div class="shoe-card" tabindex="0">
+                    <div class="shoe-card__media" data-background-url="../images/shoe-1.png"></div>
+                    <div class="shoe-card__actions">
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                    </div>
+                    <h3 class="shoe-card__title">
+                      Even&Odd
+                    </h3>
+                    <div class="shoe-card__price">
+                      <div class="price-box">
+                        <div class="price-box__price text-white">
+                          $145.99
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                  <div class="shoe-card" tabindex="0">
+                    <div class="shoe-card__media" data-background-url="../images/shoe-2.png"></div>
+                    <div class="shoe-card__actions">
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                    </div>
+                    <h3 class="shoe-card__title">
+                      Even&Odd
+                    </h3>
+                    <div class="shoe-card__price">
+                      <div class="price-box">
+                        <div class="price-box__price text-white">
+                          $145.99
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shoe-card__badge">
+                      <div class="price-box price-box--dark">
+                        <div class="price-box__price text-white text-uppercase">
+                          on sale!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 p-2">
+                  <div class="shoe-card" tabindex="0">
+                    <div class="shoe-card__media" data-background-url="../images/shoe-3.png"></div>
+                    <div class="shoe-card__actions">
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg width="1.5rem" height="1.5rem" aria-hidden="true" focusable="false" data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg aria-hidden="true" width="24px" height="24px" focusable="false" data-prefix="fas" data-icon="share-square" class="svg-inline--fa fa-share-square fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M568.482 177.448L424.479 313.433C409.3 327.768 384 317.14 384 295.985v-71.963c-144.575.97-205.566 35.113-164.775 171.353 4.483 14.973-12.846 26.567-25.006 17.33C155.252 383.105 120 326.488 120 269.339c0-143.937 117.599-172.5 264-173.312V24.012c0-21.174 25.317-31.768 40.479-17.448l144.003 135.988c10.02 9.463 10.028 25.425 0 34.896zM384 379.128V448H64V128h50.916a11.99 11.99 0 0 0 8.648-3.693c14.953-15.568 32.237-27.89 51.014-37.676C185.708 80.83 181.584 64 169.033 64H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48v-88.806c0-8.288-8.197-14.066-16.011-11.302a71.83 71.83 0 0 1-34.189 3.377c-7.27-1.046-13.8 4.514-13.8 11.859z"></path></svg></i></button>
+                      <button
+                        class="shoe-card__actions__action btn"><i><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i></button>
+                    </div>
+                    <h3 class="shoe-card__title">
+                      Buffalo Decollete
+                    </h3>
+                    <div class="shoe-card__price">
+                      <div class="price-box">
+                        <div class="price-box__price text-white">
+                          $145.99
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+    </div>
+    <div class="container">
+      <hr>
+    </div>
+    <div class="container">
+      <div class="row no-gutters mb-3">
+        <div class="col-md-6 col-lg-3 p-2">
+          <div class="card h-100">
+            <div class="card-body bg-light-grey">
+              <h5 class="card-title text-uppercase">
+                free shipping
+              </h5>
+              <p class="card-text">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam,
+                itaque dolorem? Optio consectetur maiores dolore rem quibusdam.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 p-2">
+          <div class="card h-100">
+            <div class="card-body bg-light-grey">
+              <h5 class="card-title text-uppercase">
+                testimonials
+              </h5>
+              <p class="card-text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores
+                qui blanditiis voluptatibus voluptate et nesciunt inventore odio
+                velit cupiditate?
+              </p>
+              <p class="card-text"><em>- John Doe -</em></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-6 p-2">
+          <div class="card h-100">
+            <div class="card-body bg-light-grey">
+              <h5 class="card-title text-uppercase">
+                blog news
+              </h5>
+              <p class="card-text">
+                <ul class="list" id="blog-news-list">
+                  <li class="list__item list__item--enter">
+                    <div class="list__item__icon">
+                      <div class="price-box w-inherit h-inherit">
+                        <div
+                          class="price-box__price text-white text-uppercase h6 p-2 font-weight-bolder">
+                          apr 01
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list__item__text">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Eos officiis, odit, exercitationem aliquam repellat
+                      incidunt culpa sit veritatis placeat, nesciunt aut.
+                    </div>
+                  </li>
+                  <li class="list__item list__item--enter">
+                    <div class="list__item__icon">
+                      <div class="list__item__icon">
+                        <div class="price-box w-inherit h-inherit">
+                          <div
+                            class="price-box__price text-white text-uppercase h6 p-2 font-weight-bolder">
+                            apr 01
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list__item__text">
+                      Vero, quisquam minima dignissimos sequi placeat dolorum
+                      blanditiis? Consectetur nisi voluptas saepe enim autem
+                      recusandae corporis sunt accusamus.
+                    </div>
+                  </li>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body pl-0 pr-0">
+                <h5 class="card-title text-uppercase">
+                  Text widget
+                </h5>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Consequuntur esse, omnis, incidunt temporibus totam minima,
+                  consequatur veniam ipsam velit nostrum assumenda cupiditate?
+                  Incidunt suscipit reprehenderit corporis dolor esse voluptate
+                  dolorum.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body pl-0 pr-0">
+                <h5 class="card-title text-uppercase">
+                  Twitter widget
+                </h5>
+                <span id="tweet-list">
+                  <p class="card-text tweet tweet--enter">
+                    <a href="#">@ericafustero</a> Why thank you. Your work looks
+                    awesome by the way! <a href="#">@treemelody</a>
+                    <em class="pt-1 d-block">19 days ago</em>
+                  </p>
+                  <p class="card-text tweet tweet--enter">
+                    <a href="#">@raymarvelous</a> You can seek a refund through TF
+                    if it is not as advertised - but it is :)</a>
+                    <em class="pt-1 d-block">21 days ago</em>
+                  </p>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4" id="flickr-widget">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body pl-0 pr-0">
+                <h5 class="card-title text-uppercase">
+                  Flickr widget
+                </h5>
+                <p class="card-text">
+                  <div class="row no-gutters">
+                    <div class="col-4 p-1">
+                      <div class="flickr-image">
+                      </div>
+                    </div>
+                    <div class="col-4 p-1">
+                      <div class="flickr-image">
+                      </div>
+                    </div>
+                    <div class="col-4 p-1">
+                      <div class="flickr-image">
+                      </div>
+                    </div>
+                    <div class="col-4 p-1">
+                      <div class="flickr-image">
+                      </div>
+                    </div>
+                    <div class="col-4 p-1">
+                      <div class="flickr-image">
+                      </div>
+                    </div>
+                    <div class="col-4 p-1">
+                      <div class="flickr-image">
+                      </div>
+                    </div>
+                  </div>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-lg-4">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body pl-0 pr-0">
+                <div class="card-text">
+                  <div class="input-group" id="newsletter-form">
+                    <input type="text" class="form-control" placeholder="Enter email for newsletter" id="email-text-field" >
+                    <div class="input-group-prepend">
+                      <button class="btn btn-dark-grey text-dark font-weight-bold border-radius-0"
+                        id="send-email-button"
+                        aria-label="subscribe to our newsletter">
+                        <i class="fas fa-greater-than" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+          </div>
+          <div class="col-md-12 col-lg-4">
+            <div class="card bg-transparent border-0 h-100">
+              <div class="card-body pl-0 pr-1" id="social-icons">
+                <a href="#" class="social-icon"
+                    aria-label="Go to our Facebook page">
+                    <i aria-hidden="true" class="fab fa-facebook-f"></i>
+                  </a>
+                <a href="#" class="social-icon"
+                    aria-label="Go to our Twitter page">
+                    <span aria-hidden="true">
+                      <i aria-hidden="true" class="fab fa-twitter"></i>
+                    </span>
+                  </a>
+                <a href="#" class="social-icon"
+                    aria-label="Go to our Google Plus page">
+                    <i aria-hidden="true" class="fab fa-google-plus-g"></i>
+                  </a>
+                <a href="#" class="social-icon"
+                    aria-label="Go to our LinkedIn page">
+                    <i aria-hidden="true" class="fab fa-linkedin-in"></i>
+                  </a>
+                <a href="#" class="social-icon"
+                    aria-label="Go to our Flickr page">
+                    <i aria-hidden="true" class="fab fa-flickr"></i>
+                  </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <div class="footer__bottom__left">
+          Copyright &copy; Fooseshoes 2013.<br/>
+            Designed by EnzoLiVolti
+          </div>
+          <div class="footer__bottom__right">
+            <ul class="footer__list">
+              <li class="footer__list__item"><a href="/">Home <span class="sr-only">(current)</span></a></a></li>
+              <li class="footer__list__item"><a href="#">Support</a></li>
+              <li class="footer__list__item">
+                <a href="#">Terms and Conditions</a></li>
+              <li class="footer__list__item"><a href="#">Faqs</a></li>
+              <li class="footer__list__item"><a href="#">Contact us</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </footer>
+
+  <script async defer src="../js/index.js"></script>
+</body>
+</html>

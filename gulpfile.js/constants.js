@@ -10,6 +10,8 @@ module.exports = {
     JS: 'js',
     VIEWS: 'views',
     SW: 'serviceWorker.js',
+    IMAGES: 'images',
+    DATA: 'data',
   },
   SERVER: {
     PORT: 5555,

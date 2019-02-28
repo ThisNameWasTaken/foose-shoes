@@ -1,0 +1,74 @@
+@import 'bootstrap/scss/mixins';
+@import '../variables.scss';
+
+.slider {
+  position: relative;
+  &__controls {
+    background-color: #2e2e2e;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    &__control {
+      border: none;
+      border-top: 4px solid #111;
+      color: white;
+      background: transparent;
+      font-weight: 400;
+      padding: 0.5rem 1rem;
+      &__heading {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+      &__subheading {
+        font-size: 0.8rem;
+      }
+      @include media-breakpoint-up(sm) {
+        padding: 1rem 2rem;
+        &__heading {
+          font-size: 1.2rem;
+        }
+        &__subheading {
+          font-size: 1rem;
+        }
+      }
+      opacity: 0.8;
+      &:focus,
+      &:hover {
+        opacity: 0.9;
+        border-top: 4px solid $primary;
+      }
+      &--active {
+        border-top: 4px solid $primary;
+        opacity: 1;
+      }
+    }
+  }
+  &__slides {
+    position: relative;
+    height: 32rem;
+    overflow: hidden;
+    &__slide {
+      top: 0;
+      left: 0;
+      position: absolute;
+      display: flex;
+      transform: translateX(0%);
+      &--animating {
+        transition: transform 0.3s ease-in-out;
+      }
+      &--slide-to-left {
+        transform: translateX(-100%);
+      }
+      &--slide-from-right {
+        transform: translateX(100%);
+      }
+      & > .jumbotron {
+        background: transparent;
+        @include media-breakpoint-up(lg) {
+          margin-left: auto;
+          width: 50%;
+        }
+      }
+    }
+  }
+}

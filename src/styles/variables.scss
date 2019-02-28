@@ -1,0 +1,57 @@
+$body-bg: #ebe7df;
+$body-color: #242424;
+
+$theme-colors: (
+  'primary': #57c5a0,
+  'danger': #ff4136,
+  'dark': #2e2e2e,
+  'darker': #212121,
+  'accent': #f27e4b,
+  'white': #fff,
+  'grey': #adadad,
+  'dark-grey': #7d7d7d,
+  'light-grey': #dfdbd4,
+);
+
+$light: map-get(
+  $map: $theme-colors,
+  $key: light,
+);
+
+$dark: map-get(
+  $map: $theme-colors,
+  $key: dark,
+);
+
+$primary: map-get(
+  $map: $theme-colors,
+  $key: primary,
+);
+
+$white: map-get(
+  $map: $theme-colors,
+  $key: 'white',
+);
+
+$grey: map-get(
+  $map: $theme-colors,
+  $key: 'grey',
+);
+
+$dark-grey: map-get(
+  $map: $theme-colors,
+  $key: dark-grey,
+);
+
+$light-grey: map-get(
+  $map: $theme-colors,
+  $key: light-grey,
+);
+
+$navbar-height: 3.5rem;
+$navbar-item-background-color: #d3d3d3;
+
+$price-box-size: 5rem;
+
+$footer-bottom-color: $dark;
+$footer-top-color: #242424;

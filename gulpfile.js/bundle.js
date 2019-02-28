@@ -1,5 +1,5 @@
 const { src, dest, series, parallel } = require('gulp');
-const { IS_PROD, DIR: { SRC, DEST, VIEWS } } = require('./constants');
+const { IS_PROD, DIR: { SRC, DEST, VIEWS, JS, STYLES, IMAGES, DATA } } = require('./constants');
 const path = require('path');
 const flatmap = require('gulp-flatmap');
 const rename = require('gulp-rename');
@@ -19,6 +19,7 @@ sass.compiler = require('node-sass');
 let jsPaths = [];
 let stylesheetPaths = [];
 let imagePaths = [];
+let jsonPaths = [];
 
 const imageminOptions = [
   imagemin.jpegtran({
@@ -37,7 +38,15 @@ const imageminOptions = [
 const js = done => {
   if (!jsPaths.length) { return done(); } // if there are no js files to be bundled, exit
 
-  const jsBlob = jsPaths.join(',');
+  const jsBlob = jsPaths.length === 1 // if there is only one file
+    ? jsPaths[0] // return the path to that file
+    : `${SRC}/${JS}/{${ // else create a glob that points to those files
+    jsPaths.map(jsPath =>
+      jsPath
+        .replace(/\\/g, '/')
+        .replace(`${SRC}/${JS}/`, ''))
+      .join(',')
+    }}`;
 
   return src(jsBlob)
     .pipe(flatmap((stream, file) => { // create a bundle for each js file
@@ -49,16 +58,35 @@ const js = done => {
           _webpack
         ));
     }))
+    .on('error', function (error) {
+      console.log(error.toString());
+      this.emit('end');
+    })
     .pipe(rename({
       dirname: '', // remove nested folders from the file path
     }))
     .pipe(dest(DEST));
 };
 
+const json = () =>
+  src(`${SRC}/${DATA}/**/*.json`)
+    .pipe(rename({
+      dirname: '', // remove nested folders from the file path
+    }))
+    .pipe(dest(DEST));
+
 const stylesheets = done => {
   if (!stylesheetPaths.length) { return done(); } // if there are no stylesheets, exit
 
-  const stylesheetGlob = stylesheetPaths.join(',');
+  const stylesheetGlob = stylesheetPaths.length === 1 // if there is only one file
+    ? stylesheetPaths[0] // return the path to that file
+    : `${SRC}/${STYLES}/{${ // else create a glob that points to those files
+    stylesheetPaths.map(stylesheetPath =>
+      stylesheetPath
+        .replace(/\\/g, '/')
+        .replace(`${SRC}/${STYLES}/`, ''))
+      .join(',')
+    }}`;
 
   return src(stylesheetGlob)
     .pipe(sass({
@@ -69,10 +97,46 @@ const stylesheets = done => {
     .pipe(postcss()) // minify and auto-prefix styles
     .pipe(IF(IS_PROD, purgecss({ // remove unused styles in production
       content: [
-        path.join(__dirname, `../${SRC}/**/*.{html}`),
-        path.join(__dirname, `../${SRC}/**/*.{js,mjs}`), // TODO: Add extractors that only looks at strings inside js files so that variable names and comment do not get picked up
+        `${SRC}/**/*.html`,
+        `${SRC}/**/*.{js,mjs}`,
+        // `./${SRC}/${JS}/**/*.{js,mjs}`, // TODO: Add extractors that only looks at strings inside js files so that variable names and comment do not get picked up
       ],
+      keyframes: true,
+      fontFace: true,
+      rejected: true,
     })))
+    .pipe(flatmap((stream, file) => {
+      let contents = file.contents.toString('utf8');
+
+      // get js files paths
+      const imageMatches = contents.match(/url\(["']?(.*?\.(jpeg|jpg|png|gif|svg|webp))["']?\)/gi);
+
+      if (imageMatches) {
+        imagePaths.push(
+          ... new Set(
+            imageMatches
+              .map(imageMatch => imageMatch.match(/url\(["']?(.*?\.(jpeg|jpg|png|gif|svg|webp))["']?\)/)[1])
+              .filter(imageUrl => !imageUrl.startsWith('http')) // filter out external sources
+              .map(relativeFilePath => {
+                // update file paths
+                contents = contents.replace(
+                  relativeFilePath,
+                  path.basename(relativeFilePath)
+                );
+
+                relativeFilePath = `./${IMAGES}/` + relativeFilePath.split(`${IMAGES}/`)[1];
+                const filePath = path.join(`./${SRC}`, relativeFilePath).replace(/\\/g, '/');
+                return filePath;
+              })
+          )
+        );
+      }
+
+      // update the paths inside the stylesheets
+      file.contents = Buffer.from(contents);
+
+      return stream;
+    }))
     .pipe(rename({
       dirname: '', // remove nested folders from the file path
     }))
@@ -83,7 +147,15 @@ const stylesheets = done => {
 const images = done => {
   if (!imagePaths.length) { return done(); } // if there are no images, exit
 
-  const imageGlob = imagePaths.join(',');
+  const imageGlob = imagePaths.length === 1 // if there is only one file
+    ? imagePaths[0] // return the path to that file
+    : `${SRC}/${IMAGES}/{${ // else create a glob that points to those files
+    imagePaths.map(imagePath =>
+      imagePath
+        .replace(/\\/g, '/')
+        .replace(`${SRC}/${IMAGES}/`, ''))
+      .join(',')
+    }}`;
 
   return src(imageGlob)
     .pipe(IF(IS_PROD, imagemin(imageminOptions))) // compress images in production
@@ -104,55 +176,67 @@ const html = () =>
       // get js files paths
       const jsFileMatches = contents.match(/src=".*\.js"/g);
       jsPaths = jsFileMatches
-        ? jsFileMatches.map(jsFileMatch => {
-          // create a js bundle
-          const relativeFilePath = jsFileMatch.match(/src="(.*)"/)[1];
+        ? jsFileMatches
+          .filter(jsFileMatch => !jsFileMatch.startsWith('src="http'))
+          .map(jsFileMatch => {
+            // create a js bundle
+            const relativeFilePath = jsFileMatch.match(/src="(.*)"/)[1];
 
-          // update file paths
-          contents = contents.replace(
-            relativeFilePath,
-            path.basename(relativeFilePath)
-          );
+            // update file paths
+            contents = contents.replace(
+              relativeFilePath,
+              path.basename(relativeFilePath)
+            );
 
-          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-          return filePath;
-        })
+            const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+            return filePath;
+          })
         : [];
 
       // get stylesheets paths
       const stylesheetMatches = contents.match(/href=".*\.(css|sass|scss)"/g);
+
       stylesheetPaths = stylesheetMatches
-        ? stylesheetMatches.map(stylesheetMatch => {
-          const relativeFilePath = stylesheetMatch.match(/href="(.*)"/)[1];
+        ? stylesheetMatches
+          .filter(stylesheetMatch => !stylesheetMatch.startsWith('href="http')) // filter out external sources
+          .map(stylesheetMatch => {
+            const relativeFilePath = stylesheetMatch.match(/href="(.*)"/)[1];
 
-          // update file paths
-          contents = contents.replace(
-            relativeFilePath,
-            path
-              .basename(relativeFilePath)
-              .replace(/\.(scss|sass)$/, '.css')
-          );
+            // update file paths
+            contents = contents.replace(
+              relativeFilePath,
+              path
+                .basename(relativeFilePath)
+                .replace(/\.(scss|sass)$/, '.css')
+            );
 
-          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-          return filePath;
-        })
+            const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+            return filePath;
+          })
         : [];
 
       // get image paths
-      const images = contents.match(/=".*\.(jpeg|jpg|png|gif|svg|webp)"/gi);
+      const images = contents.match(/=["']*?.*?\.(jpeg|jpg|png|gif|svg|webp)["']*?/gi);
+
       imagePaths = images
-        ? images.map(imagePath => {
-          const relativeFilePath = imagePath.match(/="(.*)"/)[1];
+        ? [
+          ... new Set(
+            images
+              .filter(imagePath => !imagePath.startsWith('="http')) // filter out external sources
+              .map(imagePath => {
+                const relativeFilePath = imagePath.match(/[^"']*?\.(jpeg|jpg|png|gif|svg|webp)/i)[0];
 
-          // update file paths
-          contents = contents.replace(
-            relativeFilePath,
-            path.basename(relativeFilePath)
-          );
+                // update file paths
+                contents = contents.replace(
+                  relativeFilePath,
+                  path.basename(relativeFilePath)
+                );
 
-          const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
-          return filePath;
-        })
+                const filePath = path.join(`${SRC}/${VIEWS}/`, relativeFilePath);
+                return filePath;
+              })
+          )
+        ]
         : [];
 
       // update the paths inside the html file
@@ -162,12 +246,13 @@ const html = () =>
     }))
     .pipe(dest(DEST));
 
-const bundle = series(html, parallel(js, stylesheets, images));
+const bundle = series(html, parallel(js, stylesheets), parallel(images, json));
 
 module.exports = {
   html,
   stylesheets,
   images,
   js,
+  json,
   bundle,
 };

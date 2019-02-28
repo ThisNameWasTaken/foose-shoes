@@ -10,7 +10,9 @@ const inlineCriticalStyles = done => {
     .pipe(flatmap((stream, file) => {
       let contents = file.contents.toString('utf8');
 
-      const stylesheetMatches = contents.match(/href=".*\.css"/g);
+      const stylesheetMatches = contents
+        .match(/href=".*\.css"/g)
+        .filter(match => !match.startsWith('href="http')); // filter out external sources
 
       if (!stylesheetMatches) { return stream; }
 

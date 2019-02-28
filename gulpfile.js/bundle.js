@@ -1,5 +1,5 @@
 const { src, dest, series, parallel } = require('gulp');
-const { IS_PROD, DIR: { SRC, DEST, VIEWS, JS, STYLES, IMAGES } } = require('./constants');
+const { IS_PROD, DIR: { SRC, DEST, VIEWS, JS, STYLES, IMAGES, DATA } } = require('./constants');
 const path = require('path');
 const flatmap = require('gulp-flatmap');
 const rename = require('gulp-rename');
@@ -19,6 +19,7 @@ sass.compiler = require('node-sass');
 let jsPaths = [];
 let stylesheetPaths = [];
 let imagePaths = [];
+let jsonPaths = [];
 
 const imageminOptions = [
   imagemin.jpegtran({
@@ -66,6 +67,13 @@ const js = done => {
     }))
     .pipe(dest(DEST));
 };
+
+const json = () =>
+  src(`${SRC}/${DATA}/**/*.json`)
+    .pipe(rename({
+      dirname: '', // remove nested folders from the file path
+    }))
+    .pipe(dest(DEST));
 
 const stylesheets = done => {
   if (!stylesheetPaths.length) { return done(); } // if there are no stylesheets, exit
@@ -238,12 +246,13 @@ const html = () =>
     }))
     .pipe(dest(DEST));
 
-const bundle = series(html, parallel(js, stylesheets), images);
+const bundle = series(html, parallel(js, stylesheets), parallel(images, json));
 
 module.exports = {
   html,
   stylesheets,
   images,
   js,
+  json,
   bundle,
 };

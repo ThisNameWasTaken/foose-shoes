@@ -1,3 +1,11 @@
+import Modal from './modal';
+
+const flickrModalElement = document.querySelector('#flickr-modal');
+const flickrModalImageElement = flickrModalElement.querySelector(
+  '.flickr-modal__image'
+);
+const flickrModal = new Modal(flickrModalElement);
+
 (async () => {
   if (!('IntersectionObserver' in window)) {
     await import('intersection-observer');
@@ -9,6 +17,10 @@
   if (!flickrImageElements) {
     return;
   }
+
+  flickrImageElements.forEach(image => {
+    image.setAttribute('tab-index', '0');
+  });
 
   const flickrObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(async entry => {
@@ -34,6 +46,12 @@
         flickrImageElements.forEach((imageElement, index) => {
           imageElement.style.backgroundImage = `url(${flickrImages[index].src ||
             ''})`;
+
+          imageElement.addEventListener('click', () => {
+            flickrModal.open(imageElement);
+            flickrModalImageElement.src = flickrImages[index].src || '';
+            flickrModalImageElement.alt = flickrImages[index].alt || '';
+          });
         });
       } catch (error) {
         console.error(error);

@@ -1,0 +1,44 @@
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: o;
+  width: 100%;
+  height: 100vh;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  &--active {
+    pointer-events: all;
+    opacity: 1;
+  }
+  &__backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(#111, 0.6);
+  }
+  &__content {
+    z-index: 1;
+    margin: auto;
+    padding: 1rem 2rem;
+    // background: $body-bg;
+    max-height: 100vh;
+    padding: 1rem;
+  }
+  &__close-button {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    transform: scale(0.75);
+    padding: 0;
+    background: rgba($dark, 0.8);
+    z-index: 2;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+  }
+}

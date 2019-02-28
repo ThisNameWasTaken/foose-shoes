@@ -1,13 +1,17 @@
 .footer {
   &__top {
-    @include fill($footer-top-color);
+    // @include fill($footer-top-color);
+    background: $footer-top-color;
+    color: $grey;
     padding: 1rem;
     & > .container {
       padding: 0 2rem;
     }
   }
   &__bottom {
-    @include fill($footer-bottom-color);
+    // @include fill($footer-bottom-color);
+    background: $footer-bottom-color;
+    color: $grey;
     padding: 1rem;
     &,
     & > .container {

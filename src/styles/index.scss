@@ -37,6 +37,12 @@
   @include fill($primary);
 }
 
+.row-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #email-text-field {
   @include fill($dark);
   border: none;

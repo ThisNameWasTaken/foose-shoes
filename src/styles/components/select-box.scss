@@ -1,0 +1,28 @@
+.select-box {
+  margin: 1rem 1rem;
+  position: relative;
+  display: inline-block;
+  background: #242424;
+  color: $white;
+  // padding-right: 3rem;
+  max-width: 12rem;
+  width: 100%;
+  &__select {
+    border: none;
+    padding: 1rem 2rem;
+    background: inherit;
+    color: inherit;
+    appearance: button;
+    width: 100%;
+    text-align: center;
+  }
+  &__icon {
+    z-index: 1;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: inherit;
+    color: inherit;
+  }
+}

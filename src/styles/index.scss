@@ -12,6 +12,7 @@
 @import 'components/social-icon.scss';
 @import 'components/flickr-image.scss';
 @import 'components/modal.scss';
+@import 'components/select-box.scss';
 @import 'layout/footer.scss';
 @import 'utils.scss';
 
@@ -156,4 +157,10 @@
       margin-left: auto;
     }
   }
+}
+
+#filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

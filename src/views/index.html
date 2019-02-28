@@ -42,6 +42,35 @@
       </button>
     </div>
 
+    <div class="modal mobile-menu-modal" aria-hidden="true" id="mobile-menu-modal">
+        <div class="modal__backdrop"></div>
+        <div class="modal__content container">
+            <ul>
+                <li>
+                  <a class="navbar__item" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Products</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">About</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Pages</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Blog</a>
+                </li>
+                <li>
+                  <a class="navbar__item" href="#">Contact</a>
+                </li>
+              </ul>
+        </div>
+        <button class="btn text-light modal__close-button" aria-label="close modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
   <nav class="position-fixed fixed-top w-100">
     <div class="navbar navbar-expand-md navbar-dark bg-dark">
       <div class="container">
@@ -84,7 +113,7 @@
     </div>
     <div class="navbar navbar-expand-md navbar-light bg-light">
       <div class="container" style="position: relative;">
-        <button class="navbar__menu"><svg aria-hidden="true"
+        <button class="navbar__menu" id="navbar-menu"><svg aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
             viewBox="0 0 24 24">
             <path fill="none" d="M0 0h24v24H0V0z" />

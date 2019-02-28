@@ -84,4 +84,11 @@
     right: 1rem;
     z-index: 3;
   }
+  &--list & {
+    display: flex;
+    &__media {
+      width: 30%;
+      padding-top: 25%;
+    }
+  }
 }

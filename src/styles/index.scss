@@ -145,3 +145,15 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+#products-banner {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: -200px 100%;
+  .jumbotron {
+    @include media-breakpoint-up(lg) {
+      width: 50%;
+      margin-left: auto;
+    }
+  }
+}

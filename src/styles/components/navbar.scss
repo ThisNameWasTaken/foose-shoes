@@ -5,6 +5,7 @@
 }
 
 .navbar {
+  // overflow: hidden;
   padding: 0;
   margin: 0;
   line-height: $navbar-height;
@@ -18,11 +19,13 @@
     padding: 0;
   }
   &__left {
+    border-right: 1px solid rgba($grey, 0.6);
     @include media-breakpoint-down(sm) {
       display: none;
     }
   }
   &__right {
+    border-right: 1px solid rgba($grey, 0.6);
   }
   &__brand {
     text-transform: uppercase;
@@ -42,14 +45,17 @@
     display: inline;
   }
   &__item {
+    background: transparent;
     float: left;
     display: block;
     padding: 0rem 1rem;
     margin: 0;
-    @include fill($navbar-item-background-color);
+    font-weight: 500;
+    border: none;
+    border-left: 1px solid rgba($grey, 0.6);
     &:hover,
     &:focus {
-      @include fill(lighten($navbar-item-background-color, 10%));
+      color: $primary;
     }
   }
   a {
@@ -64,6 +70,6 @@
     }
     width: $navbar-height;
     height: $navbar-height;
-    border: none;
+    border-right: 1px solid rgba($grey, 0.6);
   }
 }

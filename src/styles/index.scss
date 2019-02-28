@@ -2,6 +2,7 @@
 @import 'variables.scss';
 @import 'bootstrap/scss/bootstrap';
 @import 'components/navbar.scss';
+@import 'components/search-field.scss';
 @import 'components/pricebox.scss';
 @import 'components/slider.scss';
 @import 'components/special-offers.scss';
@@ -12,14 +13,23 @@
 @import 'utils.scss';
 
 .form-control-dark {
-  @include fill($dark);
-  text-align: right;
-  border-color: $light;
+  // @include fill($dark);
+  background: $dark;
+  color: rgba($grey, 0.6);
+  border-color: rgba($grey, 0.6);
+  &:hover,
   &:focus {
-    @include fill($dark);
+    // @include fill($dark);
+    &,
+    &::placeholder {
+      background: $dark;
+      color: rgba($grey, 0.9);
+      border-color: rgba($grey, 0.9);
+    }
   }
   &::placeholder {
-    @include color($dark);
+    // @include color($dark);
+    background: $dark;
   }
 }
 
@@ -59,7 +69,7 @@
   text-align: left;
   padding: 1rem 2rem;
   padding-right: 4rem;
-  max-width: 220px;
+  font-weight: 500;
   @include media-breakpoint-down(sm) {
     display: none;
   }
@@ -75,20 +85,54 @@
 #open-text-field-search-button {
   width: $navbar-height;
   height: $navbar-height;
-  border: none;
   display: none;
   @include media-breakpoint-down(sm) {
     display: block;
   }
 }
 
-#login-or-register-button {
+#text-field-search {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3.5rem;
+  width: 100%;
+  background: $light;
+  &:focus {
+    background: $light;
+  }
   border: none;
+  padding: 0 2rem;
+  transition: transform 0.3s ease-in-out, opacity 0.2s ease 0.15s;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(100%);
+  &.active {
+    pointer-events: initial;
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+#login-or-register-button {
+  z-index: 10;
+  padding: 0rem 2rem;
+  background: $dark;
+  color: rgba($grey, 0.6);
+  border: 1px solid rgba($grey, 0.6);
+  font-weight: 500;
+  border-radius: 0;
+  height: 3.5rem;
+  &:hover,
+  &:focus {
+    color: rgba($grey, 0.9);
+    border: 1px solid rgba($grey, 0.9);
+  }
 }
 
 #slide-1,
 #slide-2,
 #slide-3 {
   background-size: contain;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
 }

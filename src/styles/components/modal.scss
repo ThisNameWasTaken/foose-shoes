@@ -42,3 +42,19 @@
     top: 2rem;
   }
 }
+
+.login-or-register-modal {
+  &__content {
+    background: $body-bg;
+    padding: 2rem 3rem;
+    border-radius: 0.4rem;
+    transition: transform 0.2s ease-out;
+    transform: translateY(-15vh);
+    max-width: 450px;
+  }
+  &.modal--active & {
+    &__content {
+      transform: translateY(0%);
+    }
+  }
+}

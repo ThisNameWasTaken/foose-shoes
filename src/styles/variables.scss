@@ -33,9 +33,19 @@ $white: map-get(
   $key: 'white',
 );
 
+$grey: map-get(
+  $map: $theme-colors,
+  $key: 'grey',
+);
+
 $dark-grey: map-get(
   $map: $theme-colors,
   $key: dark-grey,
+);
+
+$light-grey: map-get(
+  $map: $theme-colors,
+  $key: light-grey,
 );
 
 $navbar-height: 3.5rem;
